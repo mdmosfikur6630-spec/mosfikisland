@@ -23,9 +23,11 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Fix deagle build.gradle (runtimeOnly -> implementation)
+      - name: Fix deagle build.gradle (runtimeOnly -> implementation, compileSdk 27->30)
         run: |
           sed -i 's/runtimeOnly/implementation/g' deagle/library/build.gradle
+          sed -i 's/compileSdkVersion 27/compileSdkVersion 30/' deagle/library/build.gradle
+          sed -i 's/targetSdkVersion 27/targetSdkVersion 30/' deagle/library/build.gradle
 
       - name: Setup Gradle cache
         uses: actions/cache@v3
