@@ -1,6 +1,5 @@
 package com.oasisfeng.island.setup;
 
-import android.accounts.Account;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.admin.DevicePolicyManager;
@@ -195,8 +194,6 @@ public class SetupViewModel implements Parcelable {
 		final Intent intent = new Intent(ACTION_PROVISION_MANAGED_PROFILE);
 		intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME, DeviceAdmins.getComponentName(context));
 		intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_SKIP_ENCRYPTION, true);		// Actually works on Android 7+.
-		if (BuildConfig.DEBUG)			// TODO: Remove after testing
-			intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_ACCOUNT_TO_MIGRATE, new Account("default_account", "miui_yellowpage"));
 		if (SDK_INT >= O) intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_SKIP_USER_CONSENT, true);
 		return intent;
 	}
