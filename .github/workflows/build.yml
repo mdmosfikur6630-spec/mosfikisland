@@ -6,9 +6,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout island repo
+        uses: actions/checkout@v3
+        with:
+          path: island
 
-      - name: Checkout deagle dependency
+      - name: Checkout deagle dependency (sibling of island)
         uses: actions/checkout@v3
         with:
           repository: oasisfeng/deagle
@@ -29,12 +32,13 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
 
       - name: Build complete debug APK
+        working-directory: island
         run: |
-          ls deagle/
-          ./gradlew assembleCompleteDebug
+          ls -la ../deagle/
+          ./gradlew assembleCompleteDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: island-complete-debug-apk
-          path: assembly/build/outputs/apk/complete/debug/*.apk
+          path: island/assembly/build/outputs/apk/complete/debug/*.apk
