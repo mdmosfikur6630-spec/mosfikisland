@@ -11,10 +11,11 @@ jobs:
         with:
           path: island
 
-      - name: Checkout deagle dependency (sibling of island)
+      - name: Checkout deagle dependency (matching Island v5.x tag)
         uses: actions/checkout@v3
         with:
           repository: oasisfeng/deagle
+          ref: Island.v5.1.1
           path: deagle
 
       - name: Set up JDK 11
