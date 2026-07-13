@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.util.Log;
 
 import com.oasisfeng.island.analytics.Analytics;
 import com.oasisfeng.island.shared.BuildConfig;
@@ -25,6 +26,8 @@ import static java.util.Objects.requireNonNull;
  * Created by Oasis on 2017/2/19.
  */
 public class DeviceAdmins {
+
+	private static final String TAG = "Island.DeviceAdmins";
 
 	public static ComponentName getComponentName(final Context context) {
 		if (sDeviceAdminComponent == null) sDeviceAdminComponent = queryComponentName(context);
