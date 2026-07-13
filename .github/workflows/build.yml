@@ -23,6 +23,10 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
+      - name: Fix deagle build.gradle (runtimeOnly -> implementation)
+        run: |
+          sed -i 's/runtimeOnly/implementation/g' deagle/library/build.gradle
+
       - name: Setup Gradle cache
         uses: actions/cache@v3
         with:
@@ -34,7 +38,6 @@ jobs:
       - name: Build complete debug APK
         working-directory: island
         run: |
-          ls -la ../deagle/
           ./gradlew assembleCompleteDebug --no-daemon
 
       - name: Upload APK
