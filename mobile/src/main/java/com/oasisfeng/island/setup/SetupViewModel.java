@@ -29,7 +29,6 @@ import com.oasisfeng.island.analytics.Analytics;
 import com.oasisfeng.island.engine.IslandManager;
 import com.oasisfeng.island.mobile.BuildConfig;
 import com.oasisfeng.island.mobile.R;
-import com.oasisfeng.island.util.DeviceAdmins;
 import com.oasisfeng.island.util.DevicePolicies;
 import com.oasisfeng.island.util.Modules;
 import com.oasisfeng.island.util.Users;
@@ -37,8 +36,6 @@ import com.oasisfeng.island.util.Users;
 import java.util.Optional;
 
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE;
-import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.O;
 import static com.oasisfeng.island.analytics.Analytics.Param.ITEM_ID;
 import static com.oasisfeng.island.analytics.Analytics.Param.ITEM_NAME;
 
@@ -192,16 +189,17 @@ public class SetupViewModel implements Parcelable {
 
 	private static Intent buildManagedProfileProvisioningIntent(final Context context) {
 		final Intent intent = new Intent(ACTION_PROVISION_MANAGED_PROFILE);
-		intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME, DeviceAdmins.getComponentName(context));
+		intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME,
+				new ComponentName("com.oasisfeng.island", "com.oasisfeng.island.IslandDeviceAdminReceiver"));
 		intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_SKIP_ENCRYPTION, true);		// Actually works on Android 7+.
-		if (SDK_INT >= O) intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_SKIP_USER_CONSENT, true);
 		return intent;
 	}
 
 	/** Initiates the managed device provisioning */
 	private static Intent buildManagedDeviceProvisioningIntent(final @NonNull Fragment fragment, final int request_code) {
 		return new Intent(DevicePolicyManager.ACTION_PROVISION_MANAGED_DEVICE)
-				.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME, DeviceAdmins.getComponentName(fragment.getContext()))
+				.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME,
+						new ComponentName("com.oasisfeng.island", "com.oasisfeng.island.IslandDeviceAdminReceiver"))
 				.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_SKIP_ENCRYPTION, true);		// Actually works on Android 7+.
 	}
 
