@@ -178,6 +178,9 @@ public class IslandProvisioning extends IntentService {
 			Log.e(TAG, "Failed to launch main activity in owner user.");
 			Toasts.show(context, R.string.toast_setup_complete, Toast.LENGTH_LONG);
 		}
+
+		// Auto-install predefined packages from the primary profile into the new Island profile (async).
+		new Thread(new AutoInstallPackages(context), "AutoInstallPackages").start();
 	}
 
 	@ProfileUser private static void hideUnnecessaryAppsInManagedProfile(final Context context) {
